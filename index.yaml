@@ -3,7 +3,21 @@ entries:
   stolon:
   - apiVersion: v2
     appVersion: 0.16.0
-    created: "2022-07-25T21:12:14.189754798+03:00"
+    created: "2022-07-25T21:25:14.779472692+03:00"
+    dependencies:
+    - condition: etcd.enabled
+      name: etcd
+      repository: https://charts.bitnami.com/bitnami
+      version: 6.13.1
+    description: Stolon - PostgreSQL cloud native High Availability
+    digest: 0a076feb7ec7e3163adafec90849eaf5e727c48b1eb4e927560b6d19ab514bfa
+    name: stolon
+    urls:
+    - https://iamalryz.github.io/helm-charts/charts/stolon-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 0.16.0
+    created: "2022-07-25T21:25:14.776700782+03:00"
     dependencies:
     - condition: etcd.enabled
       name: etcd
@@ -15,4 +29,4 @@ entries:
     urls:
     - https://iamalryz.github.io/helm-charts/charts/stolon-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-25T21:12:14.186825555+03:00"
+generated: "2022-07-25T21:25:14.774258488+03:00"
