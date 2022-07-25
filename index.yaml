@@ -3,7 +3,16 @@ entries:
   stolon:
   - apiVersion: v2
     appVersion: 0.16.0
-    created: "2022-07-25T21:27:51.370932429+03:00"
+    created: "2022-07-25T21:29:55.07320651+03:00"
+    description: Stolon - PostgreSQL cloud native High Availability
+    digest: a0cdef1bdb2cebc6de3b0cfb3bbf68ed40bb39e6394d5841a66943a223db96db
+    name: stolon
+    urls:
+    - https://iamalryz.github.io/helm-charts/charts/stolon-0.4.0.tgz
+    version: 0.4.0
+  - apiVersion: v2
+    appVersion: 0.16.0
+    created: "2022-07-25T21:29:55.072748991+03:00"
     dependencies:
     - condition: etcd.enabled
       name: etcd
@@ -17,7 +26,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 0.16.0
-    created: "2022-07-25T21:27:51.368495322+03:00"
+    created: "2022-07-25T21:29:55.070492384+03:00"
     dependencies:
     - condition: etcd.enabled
       name: etcd
@@ -31,7 +40,7 @@ entries:
     version: 0.2.0
   - apiVersion: v2
     appVersion: 0.16.0
-    created: "2022-07-25T21:27:51.3661308+03:00"
+    created: "2022-07-25T21:29:55.068105945+03:00"
     dependencies:
     - condition: etcd.enabled
       name: etcd
@@ -43,4 +52,4 @@ entries:
     urls:
     - https://iamalryz.github.io/helm-charts/charts/stolon-0.1.0.tgz
     version: 0.1.0
-generated: "2022-07-25T21:27:51.363122343+03:00"
+generated: "2022-07-25T21:29:55.065251809+03:00"
