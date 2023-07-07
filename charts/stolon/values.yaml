@@ -70,6 +70,8 @@ hooks:
 keeper:
   replicaCount: 2
 
+  podAnnotations: {}
+
   nodeSelector: {}
 
   affinity: {}
