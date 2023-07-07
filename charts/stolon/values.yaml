@@ -1,0 +1,132 @@
+nameOverride: ""
+
+image:
+  repository: sorintlab/stolon
+  tag: v0.16.0-pg12
+  pullPolicy: IfNotPresent
+
+etcdImage:
+  repository: docker.io/bitnami/etcd
+  tag: 3.5.1-debian-10-r88
+  pullPolicy: IfNotPresent
+
+consulImage:
+  repository: docker.io/bitnami/consul
+  tag: 1.12.3-debian-11-r3
+  pullPolicy: IfNotPresent
+
+clusterName: default
+clusterSpec:
+  initMode: new
+  initTimeout: 5m0s
+  syncTimeout: 0s
+  dbWaitReadyTimeout: 1m0s
+  failInterval: 20s
+  deadKeeperRemovalInterval: 48h0m0s
+  proxyCheckInterval: 5s
+  proxyTimeout: 15s
+  maxStandbys: 20
+  maxStandbysPerSender: 3
+  maxStandbyLag: 1232896
+  synchronousReplication: false
+  minSynchronousStandbys: 1
+  maxSynchronousStandbys: 1
+  additionalWalSenders: 5
+  additionalMasterReplicationSlots:
+  usePgrewind: false
+  mergePgParameters: true
+  role: master
+  newConfig:
+  pitrConfig:
+  existingConfig:
+  standbyConfig:
+  defaultSUReplAccessMode: all
+  pgParameters:
+    datestyle: iso, mdy
+    default_text_search_config: pg_catalog.english
+    dynamic_shared_memory_type: posix
+    lc_messages: en_US.utf8
+    lc_monetary: en_US.utf8
+    lc_numeric: en_US.utf8
+    lc_time: en_US.utf8
+    log_timezone: Etc/UTC
+    max_connections: '100'
+    max_wal_size: 1GB
+    min_wal_size: 80MB
+    shared_buffers: 128MB
+    timezone: Etc/UTC
+    wal_level: replica
+  pgHBA:
+  automaticPgRestart: false
+
+store:
+  backend: consul
+  endpoints: consul-headless:8500
+
+hooks:
+  autoInitCluster: true
+  autoUpdateCluster: true
+
+keeper:
+  replicaCount: 2
+
+  nodeSelector: {}
+
+  affinity: {}
+
+  tolerations: []
+
+  resources:
+    limits: {}
+    requests: {}
+
+  persistence:
+    accessModes:
+    - ReadWriteOnce
+    size: 10Gi
+
+
+  debug: false
+
+  security:
+    suUsername: ""
+    suPassword: ""
+    replUsername: ""
+    replPassword: ""
+
+sentinel:
+  replicaCount: 2
+
+  nodeSelector: {}
+
+  affinity: {}
+
+  tolerations: []
+
+  resources:
+    limits: {}
+    requests: {}
+
+  debug: false
+
+proxy:
+  replicaCount: 2
+
+  nodeSelector: {}
+
+  affinity: {}
+
+  tolerations: []
+
+  readinessProbe:
+    failureThreshold: 3
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    successThreshold: 1
+    timeoutSeconds: 1
+
+  resources:
+    limits: {}
+    requests: {}
+
+  debug: false
