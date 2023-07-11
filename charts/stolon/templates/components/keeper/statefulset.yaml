@@ -77,15 +77,6 @@ spec:
               fieldPath: status.podIP
         - name: STKEEPER_METRICS_LISTEN_ADDRESS
           value: 0.0.0.0:8080
-        - name: PGHOST
-          value: {{ include "stolon.proxy.fullname" . }}
-        - name: PGUSER
-          value: {{ .Values.auth.superuser.username }}
-        - name: PGPASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "stolon.fullname" . }}
-              key: auth-superuser-password
         - name: STKEEPER_PG_SU_USERNAME
           value: {{ .Values.auth.superuser.username }}
         - name: STKEEPER_PG_SU_PASSWORD
@@ -100,6 +91,15 @@ spec:
             secretKeyRef:
               name: {{ include "stolon.fullname" . }}
               key: auth-replication-password
+        - name: PGHOST
+          value: {{ include "stolon.proxy.fullname" . }}
+        - name: PGUSER
+          value: {{ .Values.auth.superuser.username }}
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "stolon.fullname" . }}
+              key: auth-superuser-password
         ports:
         - name: postgresql
           containerPort: 5432
