@@ -69,13 +69,9 @@ hooks:
 
 keeper:
   replicaCount: 2
-
   podAnnotations: {}
-
   nodeSelector: {}
-
   affinity: {}
-
   tolerations: []
 
   resources:
@@ -87,7 +83,6 @@ keeper:
     - ReadWriteOnce
     size: 10Gi
 
-
   debug: false
 
   security:
@@ -98,11 +93,8 @@ keeper:
 
 sentinel:
   replicaCount: 2
-
   nodeSelector: {}
-
   affinity: {}
-
   tolerations: []
 
   resources:
@@ -113,11 +105,8 @@ sentinel:
 
 proxy:
   replicaCount: 2
-
   nodeSelector: {}
-
   affinity: {}
-
   tolerations: []
 
   readinessProbe:
