@@ -75,6 +75,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
+        - name: STKEEPER_METRICS_LISTEN_ADDRESS
+          value: 0.0.0.0:8080
         - name: PGHOST
           value: {{ include "stolon.proxy.fullname" . }}
         - name: PGUSER
@@ -97,8 +99,6 @@ spec:
             secretKeyRef:
               name: {{ include "stolon.keeper.fullname" . }}
               key: stkeeper-pg-su-password
-        - name: STKEEPER_METRICS_LISTEN_ADDRESS
-          value: 0.0.0.0:8080
         - name: STKEEPER_PG_REPL_USERNAME
           valueFrom:
             secretKeyRef:
