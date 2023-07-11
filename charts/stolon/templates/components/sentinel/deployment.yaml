@@ -41,11 +41,11 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      - name: {{ include "stolon.sentinel.fullname" . }}
+      - name: sentinel
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command:
-        - gosu 
+        - gosu
         args:
         - stolon
         - stolon-sentinel
