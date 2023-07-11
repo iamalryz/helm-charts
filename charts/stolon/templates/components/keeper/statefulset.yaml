@@ -75,6 +75,16 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
+        - name: STKEEPER_PG_SU_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "stolon.keeper.fullname" . }}
+              key: stkeeper-pg-su-username
+        - name: STKEEPER_PG_SU_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "stolon.keeper.fullname" . }}
+              key: stkeeper-pg-su-password
         - name: STKEEPER_METRICS_LISTEN_ADDRESS
           value: 0.0.0.0:8080
         - name: STKEEPER_PG_REPL_USERNAME
@@ -87,16 +97,6 @@ spec:
             secretKeyRef:
               name: {{ include "stolon.keeper.fullname" . }}
               key: stkeeper-pg-repl-password
-        - name: STKEEPER_PG_SU_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
-              key: stkeeper-pg-su-username
-        - name: STKEEPER_PG_SU_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
-              key: stkeeper-pg-su-password
         ports:
         - name: postgresql
           containerPort: 5432
