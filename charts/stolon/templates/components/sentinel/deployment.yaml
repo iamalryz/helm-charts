@@ -13,6 +13,10 @@ spec:
     metadata:
       labels:
         {{- include "stolon.sentinel.selectorLabels" . | nindent 8 }}
+      {{- with .Values.sentinel.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

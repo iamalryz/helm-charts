@@ -93,6 +93,7 @@ keeper:
 
 sentinel:
   replicaCount: 2
+  podAnnotations: {}
   nodeSelector: {}
   affinity: {}
   tolerations: []
@@ -105,6 +106,7 @@ sentinel:
 
 proxy:
   replicaCount: 2
+  podAnnotations: {}
   nodeSelector: {}
   affinity: {}
   tolerations: []
