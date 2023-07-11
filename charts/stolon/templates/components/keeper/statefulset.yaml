@@ -82,32 +82,32 @@ spec:
         - name: PGUSER
           valueFrom:
             secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
+              name: {{ include "stolon.fullname" . }}
               key: stkeeper-pg-su-username
         - name: PGPASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
+              name: {{ include "stolon.fullname" . }}
               key: stkeeper-pg-su-password
         - name: STKEEPER_PG_SU_USERNAME
           valueFrom:
             secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
+              name: {{ include "stolon.fullname" . }}
               key: stkeeper-pg-su-username
         - name: STKEEPER_PG_SU_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
+              name: {{ include "stolon.fullname" . }}
               key: stkeeper-pg-su-password
         - name: STKEEPER_PG_REPL_USERNAME
           valueFrom:
             secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
+              name: {{ include "stolon.fullname" . }}
               key: stkeeper-pg-repl-username
         - name: STKEEPER_PG_REPL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
+              name: {{ include "stolon.fullname" . }}
               key: stkeeper-pg-repl-password
         ports:
         - name: postgresql
