@@ -85,12 +85,6 @@ keeper:
 
   debug: false
 
-  security:
-    suUsername: ""
-    suPassword: ""
-    replUsername: ""
-    replPassword: ""
-
 sentinel:
   replicaCount: 2
   podAnnotations: {}
@@ -123,3 +117,12 @@ proxy:
     requests: {}
 
   debug: false
+
+auth:
+  superuser:
+    username: postgres
+    password: postgres
+
+  replication:
+    username: replication
+    password: replication

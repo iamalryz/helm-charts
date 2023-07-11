@@ -80,35 +80,26 @@ spec:
         - name: PGHOST
           value: {{ include "stolon.proxy.fullname" . }}
         - name: PGUSER
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "stolon.fullname" . }}
-              key: stkeeper-pg-su-username
+          value: {{ .Values.auth.superuser.username }}
         - name: PGPASSWORD
           valueFrom:
             secretKeyRef:
               name: {{ include "stolon.fullname" . }}
-              key: stkeeper-pg-su-password
+              key: auth-superuser-password
         - name: STKEEPER_PG_SU_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "stolon.fullname" . }}
-              key: stkeeper-pg-su-username
+          value: {{ .Values.auth.superuser.username }}
         - name: STKEEPER_PG_SU_PASSWORD
           valueFrom:
             secretKeyRef:
               name: {{ include "stolon.fullname" . }}
-              key: stkeeper-pg-su-password
+              key: auth-superuser-password
         - name: STKEEPER_PG_REPL_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "stolon.fullname" . }}
-              key: stkeeper-pg-repl-username
+          value: {{ .Values.auth.replication.username }}
         - name: STKEEPER_PG_REPL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: {{ include "stolon.fullname" . }}
-              key: stkeeper-pg-repl-password
+              key: auth-replication-password
         ports:
         - name: postgresql
           containerPort: 5432
