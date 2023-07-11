@@ -75,6 +75,18 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
+        - name: PGHOST
+          value: {{ include "stolon.proxy.fullname" . }}
+        - name: PGUSER
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "stolon.keeper.fullname" . }}
+              key: stkeeper-pg-su-username
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "stolon.keeper.fullname" . }}
+              key: stkeeper-pg-su-password
         - name: STKEEPER_PG_SU_USERNAME
           valueFrom:
             secretKeyRef:
