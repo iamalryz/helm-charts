@@ -91,15 +91,15 @@ spec:
             secretKeyRef:
               name: {{ include "stolon.fullname" . }}
               key: auth-replication-password
-        - name: PGHOST
-          value: {{ include "stolon.proxy.fullname" . }}
-        - name: PGUSER
-          value: {{ .Values.auth.superuser.username }}
-        - name: PGPASSWORD
+        {{- if .Values.observability.enabled }}
+        - name: PG_OBSERVER_USERNAME
+          value: {{ .Values.auth.observer.username }}
+        - name: PG_OBSERVER_PASSWORD
           valueFrom:
             secretKeyRef:
               name: {{ include "stolon.fullname" . }}
-              key: auth-superuser-password
+              key: auth-observer-password
+        {{- end }}
         ports:
         - name: postgresql
           containerPort: 5432
