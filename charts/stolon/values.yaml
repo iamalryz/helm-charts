@@ -69,13 +69,9 @@ hooks:
 
 keeper:
   replicaCount: 2
-
   podAnnotations: {}
-
   nodeSelector: {}
-
   affinity: {}
-
   tolerations: []
 
   resources:
@@ -87,22 +83,13 @@ keeper:
     - ReadWriteOnce
     size: 10Gi
 
-
   debug: false
-
-  security:
-    suUsername: ""
-    suPassword: ""
-    replUsername: ""
-    replPassword: ""
 
 sentinel:
   replicaCount: 2
-
+  podAnnotations: {}
   nodeSelector: {}
-
   affinity: {}
-
   tolerations: []
 
   resources:
@@ -113,11 +100,9 @@ sentinel:
 
 proxy:
   replicaCount: 2
-
+  podAnnotations: {}
   nodeSelector: {}
-
   affinity: {}
-
   tolerations: []
 
   readinessProbe:
@@ -132,3 +117,19 @@ proxy:
     requests: {}
 
   debug: false
+
+observability:
+  enabled: false
+
+auth:
+  superuser:
+    username: postgres
+    password: postgres
+
+  replication:
+    username: replication
+    password: replication
+
+  observer:
+    username: observer
+    password: observer

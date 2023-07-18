@@ -13,6 +13,10 @@ spec:
     metadata:
       labels:
         {{- include "stolon.sentinel.selectorLabels" . | nindent 8 }}
+      {{- with .Values.sentinel.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -41,11 +45,11 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      - name: {{ include "stolon.sentinel.fullname" . }}
+      - name: sentinel
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command:
-        - gosu 
+        - gosu
         args:
         - stolon
         - stolon-sentinel

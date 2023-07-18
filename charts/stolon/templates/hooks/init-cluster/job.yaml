@@ -6,8 +6,9 @@ metadata:
   labels:
     {{- include "stolon.init-cluster.labels" . | nindent 4 }}
   annotations:
-    "helm.sh/hook": post-install
-    "helm.sh/hook-delete-policy": before-hook-creation
+    helm.sh/hook: post-install
+    helm.sh/hook-weight: "10"
+    helm.sh/hook-delete-policy: before-hook-creation
 spec:
   template:
     metadata:
@@ -17,7 +18,7 @@ spec:
       restartPolicy: OnFailure
       initContainers:
       {{- if eq .Values.store.backend "etcdv3" }}
-      - name: {{ include "stolon.init-cluster.fullname" . }}-wait-etcd
+      - name: wait-etcd
         image: {{ .Values.etcdImage.repository }}:{{ .Values.etcdImage.tag }}
         imagePullPolicy: {{ .Values.etcdImage.pullPolicy }}
         command:
@@ -32,7 +33,7 @@ spec:
             sleep 5
           done
       {{- else if eq .Values.store.backend "consul" }}
-      - name: {{ include "stolon.init-cluster.fullname" . }}-wait-consul
+      - name: wait-consul
         image: {{ .Values.consulImage.repository }}:{{ .Values.consulImage.tag }}
         imagePullPolicy: {{ .Values.consulImage.pullPolicy }}
         command:
@@ -48,7 +49,7 @@ spec:
           done
       {{- end }}
       containers:
-      - name: {{ include "stolon.init-cluster.fullname" . }}
+      - name: init-cluster
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command:

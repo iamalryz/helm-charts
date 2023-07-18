@@ -1,0 +1,78 @@
+{{- if .Values.observability.enabled }}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "stolon.ensure-observer-user.fullname" . }}
+  labels:
+    {{- include "stolon.ensure-observer-user.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-weight: "20"
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  template:
+    metadata:
+      labels:
+        {{- include "stolon.ensure-observer-user.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: OnFailure
+      initContainers:
+      - name: wait-postgresql
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:
+        - bash
+        - -ec
+        - |
+          echo "Waiting until PostgreSQL master becomes healthy"
+          while true; do
+            echo "Checking PostreSQL master via stolon-proxy"
+            pg_isready && break
+            echo
+            sleep 5
+          done
+        env:
+        - name: PGHOST
+          value: {{ include "stolon.proxy.fullname" . }}
+        - name: PGUSER
+          value: {{ .Values.auth.superuser.username }}
+      containers:
+      - name: ensure-user
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        command:
+        - bash
+        - -ec
+        - |
+          if ! psql -d postgres -tXAc "select 1 from pg_roles where rolname='${PG_OBSERVER_USERNAME}'" | grep -q 1; then
+            echo "Creating user '${PG_OBSERVER_USERNAME}'"
+            psql -c "create user ${PG_OBSERVER_USERNAME}"
+          else
+            echo "User '${PG_OBSERVER_USERNAME}' already exists"
+          fi
+
+          echo -e "\nEnsure password to user '${PG_OBSERVER_USERNAME}'"
+          psql -c "alter user ${PG_OBSERVER_USERNAME} with password '${PG_OBSERVER_PASSWORD}'"
+          
+          echo -e "\nEnsure observability privileges to user '${PG_OBSERVER_USERNAME}'"
+          psql -c "grant pg_monitor to ${PG_OBSERVER_USERNAME}"
+          psql -c "grant select on pg_stat_database to ${PG_OBSERVER_USERNAME}"
+        env:
+        - name: PGHOST
+          value: {{ include "stolon.proxy.fullname" . }}
+        - name: PGUSER
+          value: {{ .Values.auth.superuser.username }}
+        - name: PGPASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "stolon.fullname" . }}
+              key: auth-superuser-password
+        - name: PG_OBSERVER_USERNAME
+          value: {{ .Values.auth.observer.username }}
+        - name: PG_OBSERVER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "stolon.fullname" . }}
+              key: auth-observer-password
+{{- end }}

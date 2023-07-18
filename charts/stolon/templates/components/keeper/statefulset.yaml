@@ -44,7 +44,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       containers:
-      - name: {{ include "stolon.keeper.fullname" . }}
+      - name: keeper
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command:
@@ -77,26 +77,29 @@ spec:
               fieldPath: status.podIP
         - name: STKEEPER_METRICS_LISTEN_ADDRESS
           value: 0.0.0.0:8080
-        - name: STKEEPER_PG_REPL_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
-              key: stkeeper-pg-repl-username
-        - name: STKEEPER_PG_REPL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
-              key: stkeeper-pg-repl-password
         - name: STKEEPER_PG_SU_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
-              key: stkeeper-pg-su-username
+          value: {{ .Values.auth.superuser.username }}
         - name: STKEEPER_PG_SU_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ include "stolon.keeper.fullname" . }}
-              key: stkeeper-pg-su-password
+              name: {{ include "stolon.fullname" . }}
+              key: auth-superuser-password
+        - name: STKEEPER_PG_REPL_USERNAME
+          value: {{ .Values.auth.replication.username }}
+        - name: STKEEPER_PG_REPL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "stolon.fullname" . }}
+              key: auth-replication-password
+        {{- if .Values.observability.enabled }}
+        - name: PG_OBSERVER_USERNAME
+          value: {{ .Values.auth.observer.username }}
+        - name: PG_OBSERVER_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "stolon.fullname" . }}
+              key: auth-observer-password
+        {{- end }}
         ports:
         - name: postgresql
           containerPort: 5432
