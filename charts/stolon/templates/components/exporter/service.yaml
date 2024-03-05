@@ -1,0 +1,16 @@
+{{- if .Values.exporter.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "stolon.exporter.fullname" . }}
+  labels:
+    {{- include "stolon.exporter.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.exporter.service.type }}
+  ports:
+  - name: http
+    port: {{ .Values.exporter.service.port }}
+    targetPort: {{ .Values.exporter.service.port }}
+  selector:
+    {{- include "stolon.exporter.selectorLabels" . | nindent 4 }}
+{{- end }}
