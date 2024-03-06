@@ -10,5 +10,10 @@ spec:
   - name: postgresql
     port: 5432
     targetPort: postgresql
+  {{- if .Values.exporter.enabled }}
+  - name: exporter
+    port: 9187
+    targetPort: exporter
+  {{- end }}
   selector:
     {{- include "stolon.keeper.selectorLabels" . | nindent 4 }}

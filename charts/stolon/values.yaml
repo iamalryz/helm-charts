@@ -129,25 +129,9 @@ exporter:
     repository: quay.io/prometheuscommunity/postgres-exporter
     tag: v0.15.0
     pullPolicy: IfNotPresent
-  replicaCount: 1
-  podAnnotations: {}
   datasourceSecret: {}
   disableDefaultMetrics: false
   disableSettingsMetrics: false
-  datasource:
-    host: stolon-proxy
-    port: "5432"
-    database: postgres
-    user: postgres
-    sslmode: disable
-  service:
-    type: ClusterIP
-    port: "9187"
-  resources: {}
-  tolerations: []
-  nodeSelector: {}
-  affinity: {}
-
 
 auth:
   superuser:

@@ -112,6 +112,52 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /stolon/data
+      {{- if .Values.exporter.enabled }}
+      - name: exporter
+        image: {{ .Values.exporter.image.repository }}:{{ .Values.exporter.image.tag }}
+        imagePullPolicy: {{ .Values.exporter.image.pullPolicy }}
+        args:
+        {{- if .Values.exporter.disableDefaultMetrics }}
+        - "--disable-default-metrics"
+        {{- end }}
+        {{- if .Values.exporter.disableSettingsMetrics }}
+        - "--disable-settings-metrics"
+        {{- end }}
+        env:
+        {{- if .Values.exporter.datasourceSecret }}
+        - name: DATA_SOURCE_NAME
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.exporter.datasourceSecret.name }}
+              key: {{ .Values.exporter.datasourceSecret.key }}
+        {{- else }}
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: DATA_SOURCE_URI
+          value: $(POD_NAME).{{ include "stolon.keeper.service-headless" . }}?sslmode=disable
+        - name: DATA_SOURCE_USER
+          value: {{ .Values.auth.superuser.username }}
+        - name: DATA_SOURCE_PASS
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "stolon.fullname" . }}
+              key: auth-superuser-password
+        {{- end }}
+        ports:
+        - name: exporter
+          containerPort: 9187
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: exporter
+        readinessProbe:
+          httpGet:
+            path: /
+            port: exporter
+      {{- end }}
   volumeClaimTemplates:
   - metadata:
       name: data
