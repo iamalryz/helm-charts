@@ -116,13 +116,6 @@ spec:
       - name: exporter
         image: {{ .Values.exporter.image.repository }}:{{ .Values.exporter.image.tag }}
         imagePullPolicy: {{ .Values.exporter.image.pullPolicy }}
-        args:
-        {{- if .Values.exporter.disableDefaultMetrics }}
-        - "--disable-default-metrics"
-        {{- end }}
-        {{- if .Values.exporter.disableSettingsMetrics }}
-        - "--disable-settings-metrics"
-        {{- end }}
         env:
         - name: POD_NAME
           valueFrom:
@@ -137,6 +130,10 @@ spec:
             secretKeyRef:
               name: {{ include "stolon.fullname" . }}
               key: auth-superuser-password
+        - name: PG_EXPORTER_DISABLE_DEFAULT_METRICS
+          value: {{ .Values.exporter.disableDefaultMetrics }}
+        - name: PG_EXPORTER_DISABLE_SETTINGS_METRICS
+          value: {{ .Values.exporter.disableSettingsMetrics }}
         ports:
         - name: exporter
           containerPort: 9187
