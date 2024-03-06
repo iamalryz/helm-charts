@@ -131,9 +131,9 @@ spec:
               name: {{ include "stolon.fullname" . }}
               key: auth-superuser-password
         - name: PG_EXPORTER_DISABLE_DEFAULT_METRICS
-          value: {{ .Values.exporter.disableDefaultMetrics }}
+          value: {{ .Values.exporter.disableDefaultMetrics | quote }}
         - name: PG_EXPORTER_DISABLE_SETTINGS_METRICS
-          value: {{ .Values.exporter.disableSettingsMetrics }}
+          value: {{ .Values.exporter.disableSettingsMetrics | quote }}
         ports:
         - name: exporter
           containerPort: 9187
