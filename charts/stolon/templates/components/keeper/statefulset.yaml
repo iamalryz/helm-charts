@@ -124,13 +124,6 @@ spec:
         - "--disable-settings-metrics"
         {{- end }}
         env:
-        {{- if .Values.exporter.datasourceSecret }}
-        - name: DATA_SOURCE_NAME
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Values.exporter.datasourceSecret.name }}
-              key: {{ .Values.exporter.datasourceSecret.key }}
-        {{- else }}
         - name: POD_NAME
           valueFrom:
             fieldRef:
@@ -144,7 +137,6 @@ spec:
             secretKeyRef:
               name: {{ include "stolon.fullname" . }}
               key: auth-superuser-password
-        {{- end }}
         ports:
         - name: exporter
           containerPort: 9187

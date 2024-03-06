@@ -129,7 +129,6 @@ exporter:
     repository: quay.io/prometheuscommunity/postgres-exporter
     tag: v0.15.0
     pullPolicy: IfNotPresent
-  datasourceSecret: {}
   disableDefaultMetrics: false
   disableSettingsMetrics: false
 
