@@ -1,5 +1,7 @@
 nameOverride: ""
 
+imagePullSecrets: []
+
 image:
   repository: sorintlab/stolon
   tag: v0.16.0-pg12
@@ -120,6 +122,15 @@ proxy:
 
 observability:
   enabled: false
+
+exporter:
+  enabled: false
+  image:
+    repository: quay.io/prometheuscommunity/postgres-exporter
+    tag: v0.15.0
+    pullPolicy: IfNotPresent
+  disableDefaultMetrics: false
+  disableSettingsMetrics: false
 
 auth:
   superuser:
