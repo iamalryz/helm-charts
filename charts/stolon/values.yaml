@@ -101,6 +101,8 @@ sentinel:
   debug: false
 
 proxy:
+  service:
+    type: ClusterIP
   replicaCount: 2
   podAnnotations: {}
   nodeSelector: {}
