@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "stolon.proxy.labels" . | nindent 4 }}
 spec:
-  type: ClusterIP
+  type: {{ .Values.proxy.service.type }}
   ports:
   - name: postgresql
     port: 5432
