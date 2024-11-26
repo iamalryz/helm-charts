@@ -3,6 +3,15 @@ entries:
   stolon:
   - apiVersion: v2
     appVersion: 0.16.0
+    created: "2024-11-26T11:55:19.387245257Z"
+    description: Stolon - PostgreSQL cloud native High Availability
+    digest: 466b7970f4bb196052f1ab8adc2e586593201708eea0892f0688cb95e797d27b
+    name: stolon
+    urls:
+    - https://github.com/iamalryz/helm-charts/releases/download/stolon-0.9.0/stolon-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v2
+    appVersion: 0.16.0
     created: "2024-03-13T05:49:20.231932269Z"
     description: Stolon - PostgreSQL cloud native High Availability
     digest: bb41d04dc12b9acd222365ceef3f62f453e7bcd2450fc38dbc9ae566a58af76b
@@ -46,4 +55,4 @@ entries:
     urls:
     - https://github.com/iamalryz/helm-charts/releases/download/stolon-0.4.1/stolon-0.4.1.tgz
     version: 0.4.1
-generated: "2024-03-13T05:49:20.231978475Z"
+generated: "2024-11-26T11:55:19.387273651Z"
