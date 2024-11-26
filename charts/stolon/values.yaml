@@ -69,6 +69,25 @@ hooks:
   autoInitCluster: true
   autoUpdateCluster: true
 
+  jobs:
+    initCluster:
+      podAnnotations: {}
+      nodeSelector: {}
+      affinity: {}
+      tolerations: []
+
+    updateCluster:
+      podAnnotations: {}
+      nodeSelector: {}
+      affinity: {}
+      tolerations: []
+
+    ensureObserverUser:
+      podAnnotations: {}
+      nodeSelector: {}
+      affinity: {}
+      tolerations: []
+
 keeper:
   replicaCount: 2
   podAnnotations: {}
@@ -81,6 +100,7 @@ keeper:
     requests: {}
 
   persistence:
+    storageClass: ""
     accessModes:
     - ReadWriteOnce
     size: 10Gi
@@ -103,6 +123,7 @@ sentinel:
 proxy:
   service:
     type: ClusterIP
+    annotations: {}
   replicaCount: 2
   podAnnotations: {}
   nodeSelector: {}

@@ -9,6 +9,10 @@ metadata:
     helm.sh/hook: post-upgrade
     helm.sh/hook-weight: "10"
     helm.sh/hook-delete-policy: before-hook-creation
+    {{- with .Values.hooks.jobs.updateCluster.podAnnotations }}
+    annotations:
+      {{- toYaml . | nindent 8 }}
+    {{- end }}
 spec:
   template:
     metadata:
@@ -16,6 +20,18 @@ spec:
         {{- include "stolon.update-cluster.selectorLabels" . | nindent 8 }}
     spec:
       restartPolicy: OnFailure
+      {{- with .Values.hooks.jobs.updateCluster.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.hooks.jobs.updateCluster.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.hooks.jobs.updateCluster.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       initContainers:
       {{- if eq .Values.store.backend "etcdv3" }}
       - name: wait-etcd
