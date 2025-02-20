@@ -10,6 +10,9 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.proxy.service.type }}
+  {{- if .Values.proxy.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.proxy.service.loadBalancerIP | quote }}
+  {{- end }}
   ports:
   - name: postgresql
     port: 5432
