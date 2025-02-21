@@ -123,6 +123,7 @@ sentinel:
 proxy:
   service:
     type: ClusterIP
+    loadBalancerIP: ""
     annotations: {}
   replicaCount: 2
   podAnnotations: {}
